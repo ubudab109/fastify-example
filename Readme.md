@@ -70,32 +70,27 @@ CI/CD integration with GitHub Actions ensures tests run automatically on push to
 
 Example of a logging middleware:
 ```ts
-const logger = async (ctx: Context, next: Next) => {
-  console.log(`--> ${ctx.method} ${ctx.url}`);
-  await next();
-  console.log(`<-- ${ctx.method} ${ctx.url}`);
-  console.log('Status:', ctx.status);
-  console.log('Response Body:', ctx.body);
+import { FastifyRequest, FastifyReply } from 'fastify';
+
+export const loggerMiddleware = async (req: FastifyRequest, reply: FastifyReply) => {
+  console.log(`[${req.method}] ${req.url}`);
 };
+
+
 ```
 Example controller for registration and login:
 ```ts
-export const register = async (ctx: Context) => {
-  const { email, password } = ctx.request.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const user = await createUser(email, hashedPassword);
-  ctx.body = { message: 'User created', user };
+import { FastifyRequest, FastifyReply } from 'fastify';
+
+export const authMiddleware = async (req: FastifyRequest, reply: FastifyReply) => {
+  try {
+    await req.jwtVerify();
+  } catch (err) {
+    reply.send(err);
+  }
 };
 
-export const login = async (ctx: Context) => {
-  const { email, password } = ctx.request.body;
-  const user = await findUserByEmail(email);
-  if (!user || !(await bcrypt.compare(password, user.password))) {
-    ctx.throw(401, 'Invalid credentials');
-  }
-  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET!, { expiresIn: '1h' });
-  ctx.body = { token };
-};
+
 ```
 
 Example of validation middleware using Zod:
