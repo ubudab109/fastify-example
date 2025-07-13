@@ -164,9 +164,9 @@ Differences:
 | Express   | /        | 5,482 req/sec | 17.74 ms | 1.35 MB/sec |
 | Express   | /json    | 5,244 req/sec | 18.55 ms | 1.44 MB/sec |
 | Express   | /async   | 4,406 req/sec | 22.26 ms | 1.09 MB/sec |
-| Koa       | /        | 18,586 req/sec | 4.86 ms | 3.31 MB/sec |
-| Koa       | /json    | 16,684 req/sec | 5.47 ms | 3.44 MB/sec |
-| Koa       | /async   | 6,324 req/sec | 15.38 ms | 1.16 MB/sec |
+| Fastify   | /        | 18,586 req/sec | 4.86 ms | 3.31 MB/sec |
+| Fastify   | /json    | 16,684 req/sec | 5.47 ms | 3.44 MB/sec |
+| Fastify   | /async   | 6,324 req/sec | 15.38 ms | 1.16 MB/sec |
 
 ## 13. Conclusion
 
